@@ -32,6 +32,12 @@ export default class DevToolsPanel extends React.Component {
       });
   };
 
+  clearLogs = () => {
+    this.setState({
+      data: []
+    })
+  };
+
   requestHandler = (request) => {
     this.parseLogToState(request);
   };
@@ -47,32 +53,32 @@ export default class DevToolsPanel extends React.Component {
     const { data, entryOpen } = this.state;
     return (
       <div className="devToolsWrapper">
-        <div className={`entryWrapper ${entryOpen && 'shortEntryWrapper'}`}>
-        <div>
-          <div className="operation header">
-            <span className="name">Operation Name</span>
-            <span className="params">Params</span>
-            <span className="fields">Selection</span>
-          </div>
+        <div className="toolbar">
+          <span className="clear" onClick={() => this.clearLogs()}>clear</span>
         </div>
+        <div className={`entryWrapper ${entryOpen && 'shortEntryWrapper'}`}>
         {data.map((entry, i) => {
           return (
-            <Entry
-              key={`entry-${i}`}
-              onClick={() => this.setEntry(entry, i)}
-              entry={entry}
-              isSelected={entryOpen && entry.id === entryOpen.id}
-            />
+            <div>
+              <Entry
+                key={`entry-${i}`}
+                onClick={() => this.setEntry(entry, i)}
+                entry={entry}
+                isSelected={entryOpen && entry.id === entryOpen.id}
+              />
+
+              <div className={`displayAreaWrapper ${entryOpen && entry.id === entryOpen.id && 'longDisplayAreaWrapper'}`}>
+                {entryOpen && entry.id === entryOpen.id && (
+                  <LongInformation
+                    entry={entryOpen}
+                    onRequestClose={this.onRequestClose}
+                  />
+                )}
+              </div>
+
+            </div>
           );
         })}
-        </div>
-        <div className={`displayAreaWrapper ${entryOpen && 'longDisplayAreaWrapper'}`}>
-          {entryOpen && (
-            <LongInformation
-              entry={entryOpen}
-              onRequestClose={this.onRequestClose}
-            />
-          )}
         </div>
       </div>
     );

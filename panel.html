@@ -10,15 +10,27 @@
   }
   .devToolsWrapper {
     display: flex;
+    flex-direction: column;
     width: 100%;
+  }
+  .toolbar {
+    display: flex;
+    width: 100%;
+    padding: 8px 20px;
+    background: #cccccc;
+    position: fixed;
+  }
+
+  .toolbar span {
+    margin-left: auto;
+    cursor: pointer;
   }
   .entryWrapper {
     width: 100%;
-    padding-top: 35px;
+    margin-top: 30px;
   }
   .entryWrapper.shortEntryWrapper {
-    width: 50%;
-    height: 100%;
+    width: 100%;
     overflow: auto;
   }
   .displayAreaWrapper {
@@ -26,10 +38,9 @@
   }
   .displayAreaWrapper.longDisplayAreaWrapper {
     display: block;
-    width: 50%;
-    height: 100%;
+    width: 100%;
     overflow: auto;
-    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
   }
   .header {
     position: fixed;
@@ -52,21 +63,27 @@
   .entryInner:hover {
     background: rgba(235, 242, 252, 1);
     cursor: pointer;
-    text-decoration: underline;
   }
   .entryInner.selected {
     background: rgba(232, 232, 232, 1);
   }
   .main {
-    font-size: 10px;
+    display: flex;
+    font-size: 14px;
     margin-bottom: 5px;
     font-weight: bold;
   }
   .main.status-2 {
-    color: rgba(111, 194, 139, 1);
+    color: #296CCC;
   }
   .main.status-3 {
     color: rgba(209, 154, 84, 1);
+  }
+  .statusCode {
+    margin-left: auto;
+    color: black;
+    font-size: 12px;
+    font-weight: 400;
   }
   .main.status-4, .main.status-5 {
     color: rgba(195, 104, 117, 1);
@@ -76,6 +93,13 @@
     width: 100%;
     align-items: center;
   }
+  .request {
+    display: flex;
+    align-items: center;
+  }
+  .request span {
+    margin-right: 5px;
+  }
   .header span:not(:first-child) {
     padding: 0px 14px;
   }
@@ -83,16 +107,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    border-right: 1px solid #ccc;
     padding: 5px 14px;
     margin: 0px;
     min-height: 21px;
   }
   .operation > p.name {
     font-weight: bold;
-  }
-  .operation .name {
-    width: 200px;
+    font-size: 16px;
   }
   .operation .params {
     flex: 1;
@@ -102,16 +123,12 @@
     border-right: none;
   }
   .optsBanner {
-    width: 50%;
-    position: fixed;
-    top: 0px;
-    right: 0px;
+    width: 100%;
     background: white;
     display: flex;
     height: 35px;
     align-items: flex-end;
     border-bottom: 1px solid #ccc;
-    border-left: 1px solid #ccc;
   }
   .optsBanner > * {
     margin-right: 5px;
@@ -131,9 +148,10 @@
   .optsBanner p {
     margin: 0px 10px;
     padding-bottom: 6px;
+      cursor: pointer;
   }
   .requestArea {
-    padding: 35px;
+    padding: 5px 20px 25px;
   }
   .requestArea pre {
     font-size: 14px;

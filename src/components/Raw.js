@@ -1,8 +1,7 @@
 import React from 'react';
 
 export default function Raw({
-  query,
-  queryVariables,
+  query
 }) {
   return (
     <div className="response">
@@ -10,15 +9,10 @@ export default function Raw({
       <pre>
         {query}
       </pre>
-      <h3>Query Variables</h3>
-      <pre>
-        {JSON.stringify(queryVariables, null, 4)}
-      </pre>
     </div>
   );
 }
 
 Raw.propTypes = {
-  query: React.PropTypes.string.isRequired,
-  queryVariables: React.PropTypes.object,
+  query: React.PropTypes.string.isRequired
 };

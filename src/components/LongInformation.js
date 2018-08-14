@@ -7,7 +7,7 @@ export default class LongInformation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'raw',
+      view: 'response',
     };
   }
 
@@ -20,15 +20,14 @@ export default class LongInformation extends React.Component {
       <div className="longInfoWrapper">
         <div className="optsBanner">
           <p onClick={onRequestClose}>x</p>
+          <div className={`tab ${view === 'response' && 'selected'}`} onClick={() => this.setView('response')}>Response</div>
           <div className={`tab ${view === 'raw' && 'selected'}`} onClick={() => this.setView('raw')}>Raw Query</div>
           <div className={`tab ${view === 'computed' && 'selected'}`} onClick={() => this.setView('computed')}>Computed Query</div>
-          <div className={`tab ${view === 'response' && 'selected'}`} onClick={() => this.setView('response')}>Response</div>
         </div>
         <div className="requestArea">
           {view === 'raw' && (
             <Raw
               query={entry.bareQuery}
-              queryVariables={entry.queryVariables}
             />
           )}
           {view === 'computed' && entry.data && entry.data.map((request, i) => {

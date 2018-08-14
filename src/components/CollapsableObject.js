@@ -66,7 +66,7 @@ export default class CollapsableObject extends React.Component {
           <div className="property">
             <div className="field" onClick={this.props.requestOpen}>
               <span className="closedAngleBrackets">{'{'}</span>
-              <span className="closedObject">{Object.keys(object).join(', ')}</span>
+              <span className="closedObject">{Object.keys(object).map(key => key === 'id' ? `${key}: ${object[key]}` : key).join(', ')}</span>
               <span className="closedAngleBrackets lastBrace">{'}'}</span>
             </div>
           </div>

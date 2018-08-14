@@ -1,25 +1,13 @@
 import React from 'react';
 
-const quickDisplayParams = (x) => {
-  if (!x) return 'None';
-  return x.map(y => `${y.name} = ${y.value}`).join(', ');
-};
-
-const quickDisplayFields = (x) => {
-  if (!x) return 'None';
-  return x.map(y => `${y.name}`).join(', ');
-};
-
 function Operation({
   operation,
 }) {
-  const { name, fields, params } = operation;
+  const { name } = operation;
 
   return (
     <div className="operation">
       <p className="name">{`${name}`}</p>
-      <p className="params">{quickDisplayParams(params)}</p>
-      <p className="fields">{quickDisplayFields(fields)}</p>
     </div>
   );
 }
@@ -36,7 +24,7 @@ export default function Request({
   const { name, operations } = request;
   return (
     <div className={'request'}>
-      <span>{`- ${name}`}</span>
+      <span>{`${name}:`}</span>
       {operations.map(x => (
         <Operation operation={x} />
       ))}
