@@ -66,23 +66,15 @@ function internalParse(requestData) {
   });
 }
 
-function isContentType(entry, contentType) {
-  return entry.request.headers.some(({ name, value }) => {
-    return name.toLowerCase() === 'content-type' && value.split(';')[0].toLowerCase() === contentType.toLowerCase();
-  });
-}
-
-function getQueryFromParams(params = []) {
-  return decodeURIComponent(params.find(param => param.name === 'query').value);
+function containsInUrl(entry, paths) {
+  return paths.some((path) => {
+    return entry.request.url.indexOf(path) !== -1;
+  })
 }
 
 export function isGraphQL(entry) {
   try {
-    return isContentType(entry, 'application/graphql') || (
-      isContentType(entry, 'application/json') && JSON.parse(entry.request.postData.text).query
-    ) || (
-      isContentType(entry, 'application/x-www-form-urlencoded') && getQueryFromParams(entry.request.postData.params)
-    );
+    return containsInUrl(entry, ['/graph/','/customergraph/','/publicgraph/']) && entry.request.method === 'POST';
   } catch (e) {
     return false;
   }
@@ -92,20 +84,7 @@ export function parseEntry(entry) {
   let data;
   let queryVariables;
 
-  if (isContentType(entry, 'application/graphql')) {
-    data = entry.request.postData.text;
-    queryVariables = entry.request.postData.variables;
-  } else if (isContentType(entry, 'application/x-www-form-urlencoded')) {
-    data = getQueryFromParams(entry.request.postData.params);
-  } else {
-    try {
-      const { query, variables } = JSON.parse(entry.request.postData.text);
-      data = query;
-      queryVariables = typeof variables === 'string' ? JSON.parse(variables) : variables;
-    } catch (e) {
-      return Promise.resolve(`Internal Error Parsing: ${entry}. Message: ${e.message}. Stack: ${e.stack}`);
-    }
-  }
+  data = entry.request.postData.text;
 
   const query = data;
   let requestData,
